@@ -170,6 +170,30 @@ Download	[===============          ]  61%        38912 bytes
 
 ```
 
+### Debug logging 
+Set the following in rules.mk
+
+```
+CONSOLE_ENABLE = yes
+```
+
+Then set the following callback method in keymap.c
+```
+
+void keyboard_post_init_user(void) {
+    //Remove the following line to enable debugging
+    debug_enable = true;  // Enable verbose debugging
+}
+
+```
+
+The use the following methods to print debug prints 
+
+```
+dprintf("fnished: tap code : %d \n", pair->tap);
+```
+
+
 #### Links
 - Details on Tap Dance: https://docs.qmk.fm/features/tap_dance#how-to-use
 - Source Code on various Data Types : process_tap_dance.h

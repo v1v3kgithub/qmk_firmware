@@ -90,6 +90,12 @@ typedef enum {
 } td_state_t;
 
 typedef struct {
+    uint16_t tap;
+    uint16_t double_tap;
+    uint16_t tap_hold;
+} td_double_tap_and_hold_t;
+
+typedef struct {
     uint16_t key;
     uint16_t modifier;
 } tap_dance_key_combo_t;
@@ -128,6 +134,7 @@ bool is_null(tap_dance_key_combo_t *key_combo) {
 
 // Determine the tapdance state to return
 td_state_t cur_dance(tap_dance_state_t *state) {
+    dprintf("count : %d, pressed : %d , finished : %d , interrupted: %d \n", state->count, state->pressed, state->finished, state->interrupted);
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
     }
@@ -248,6 +255,51 @@ tap_and_hold_modifier :
     .double_tap_combo = {double_tap_key,double_tap_modifier},\
     .tap_and_hold_combo = {tap_and_hold_key,tap_and_hold_modifier}}), }
 
+void keyboard_post_init_user(void) {
+    //Remove the following line to enable debugging
+    //debug_enable = true;  // Enable verbose debugging
+}
+
+void tap_dance_double_tap_and_hold_finished(tap_dance_state_t *state, void *user_data) {
+    td_double_tap_and_hold_t *pair = (td_double_tap_and_hold_t *)user_data;
+    td_state = cur_dance(state);
+
+
+    switch (td_state) {
+        case TD_SINGLE_TAP:
+            dprintf("fnished: tap code : %d \n", pair->tap);
+            tap_code16(pair->tap);
+            break;
+        case TD_DOUBLE_TAP:
+            dprintf("fnished: TD_DOUBLE_TAP  tap code : %d \n", pair->double_tap);
+            if ( pair->double_tap == 0) {
+                tap_code16(pair->tap);
+                tap_code16(pair->tap);
+            } else {
+                tap_code16(pair->double_tap);
+            }
+            break;
+        case TD_DOUBLE_TAP_AND_HOLD:
+            dprintf("fnished: TD_DOUBLE_TAP_AND_HOLD  tap code : %d \n", pair->tap_hold);
+            tap_code16(pair->tap_hold);
+            break;
+        default:
+            break;
+    }
+
+    dprintf("-------------------------------------------\n");
+}
+
+/**
+New Macro for handing 16bit code (these 16bit code include modifiers + Key code
+Thus we can apply Ctrl-Alt-X as a single code rather than specifiying 3 parameters
+Modifier 1 : Ctrl
+Modifier 2 : Alt
+Key Code: X
+**/
+#define ACTION_TD_DOUBLE_TAP_AND_HOLD(tap, double_tap, tap_hold) \
+        { .fn = {NULL, tap_dance_double_tap_and_hold_finished, NULL}, .user_data = (void *)&((td_double_tap_and_hold_t){tap, double_tap, tap_hold}), }
+
 
 tap_dance_action_t tap_dance_actions[] = {
     [TD_L] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_L,0,0,KC_L,KC_LCTL),
@@ -255,9 +307,11 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_R] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_R,0,0,KC_R,KC_LCTL),
     [TD_X] = ACTION_TAP_DANCE_DOUBLE(KC_X,LCTL(KC_X)),
     [TD_Z] = ACTION_TAP_DANCE_DOUBLE(KC_Z,LCTL(KC_Z)),
-    [TD_T] = ACTION_TAP_DANCE_DOUBLE(KC_T,LCA(KC_T)),
+    [TD_T] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_T,0,LCA(KC_T)),
 //    [TD_X] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_X,KC_X,KC_LCTL,0,0),
 //    [TD_Z] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Z,KC_Z,KC_LCTL,0,0),
+    // Under development
+//    [TD_V] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_V,RCS(KC_V),LSFT(KC_INS)),
     [TD_V] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_V,KC_V,KC_LCTL,KC_INS,KC_LSFT),
     [TD_A] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_A,0,0,KC_A,KC_LCTL),
     [TD_B] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_B,0,0,KC_B,KC_LCTL),
