@@ -299,29 +299,28 @@ Thus we can apply Ctrl-Alt-X as a single code rather than specifiying 3 paramete
 Modifier 1 : Ctrl
 Modifier 2 : Alt
 Key Code: X
+So Ctrl-Alt-X can be applied as the following LCA(KC_X)
 **/
 #define ACTION_TD_DOUBLE_TAP_AND_HOLD(tap, double_tap, tap_hold) \
         { .fn = {NULL, tap_dance_double_tap_and_hold_finished, NULL}, .user_data = (void *)&((td_double_tap_and_hold_t){tap, double_tap, tap_hold}), }
 
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_L] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_L,0,0,KC_L,KC_LCTL),
-    [TD_C] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_C,0,0,KC_C,KC_LCTL),
-    [TD_R] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_R,0,0,KC_R,KC_LCTL),
     [TD_X] = ACTION_TAP_DANCE_DOUBLE(KC_X,LCTL(KC_X)),
     [TD_Z] = ACTION_TAP_DANCE_DOUBLE(KC_Z,LCTL(KC_Z)),
-    [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4,LCTL(KC_F4)),
-    [TD_T] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_T,0,LCA(KC_T)),
-//    [TD_X] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_X,KC_X,KC_LCTL,0,0),
-//    [TD_Z] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Z,KC_Z,KC_LCTL,0,0),
-    // Under development
-    [TD_V] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_V,RCS(KC_V),LSFT(KC_INS)),
-    [TD_ESC] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_ESC,0,KC_PSCR),
-    [TD_D] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_D,0,LCTL(KC_D)),
-//    [TD_V] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_V,KC_V,KC_LCTL,KC_INS,KC_LSFT),
+
     [TD_A] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_A,0,0,KC_A,KC_LCTL),
     [TD_B] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_B,0,0,KC_B,KC_LCTL),
     [TD_F] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_F,0,0,KC_F,KC_LCTL),
     [TD_E] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_E,0,0,KC_E,KC_LGUI),
     [TD_N] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_N,0,0,KC_N,KC_LCTL),
+    [TD_L] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_L,0,0,KC_L,KC_LCTL),
+    [TD_C] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_C,0,0,KC_C,KC_LCTL),
+    [TD_R] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_R,0,0,KC_R,KC_LCTL),
+    // New Macro for Double Tap and Tap and Hold using 16bit codes
+    [TD_F4] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_F4,LCTL(KC_F4),),
+    [TD_T] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_T,0,LCA(KC_T)),
+    [TD_V] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_V,RCS(KC_V),LSFT(KC_INS)),
+    [TD_ESC] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_ESC,0,KC_PSCR),
+    [TD_D] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_D,0,LCTL(KC_D)),
 };
