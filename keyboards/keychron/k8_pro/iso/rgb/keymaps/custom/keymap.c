@@ -30,7 +30,9 @@ enum td_keycodes {
     TD_R,
     TD_N,
     TD_T,
-    TD_F4
+    TD_F4,
+    TD_ESC,
+    TD_D,
 };
 
 // clang-format off
@@ -59,12 +61,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS),
 
 [WIN_BASE] = LAYOUT_tkl_iso(
-     KC_ESC,   KC_F1,       KC_F2,    KC_F3,    TD(TD_F4),KC_F5,    KC_F6,      KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,             KC_PSCR,   KC_CTANA, RGB_MOD,
-     KC_GRV,   KC_1,        KC_2,     KC_3,     KC_4,     KC_5,     KC_6,       KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,    KC_HOME,  KC_PGUP,
-     KC_TAB,   KC_Q,        KC_W,     TD(TD_E), TD(TD_R), TD(TD_T), KC_Y,       KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,            KC_DEL,    KC_END,   KC_PGDN,
-     KC_CAPS,  TD(TD_A),    KC_S,     KC_D,     TD(TD_F), KC_G,     KC_H,       KC_J,     KC_K,     TD(TD_L), KC_SCLN,  KC_QUOT,  KC_NUHS,  KC_ENT,
-     KC_LSFT,  KC_NUBS,     TD(TD_Z), TD(TD_X), TD(TD_C), TD(TD_V), TD(TD_B),   TD(TD_N), KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,             KC_UP,
-     KC_LCTL,  KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_MEH,  KC_RGUI, MO(WIN_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
+     TD(TD_ESC),  KC_F1,       KC_F2,    KC_F3,    TD(TD_F4),KC_F5,    KC_F6,      KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,             KC_PSCR,   KC_CTANA, RGB_MOD,
+     KC_GRV,      KC_1,        KC_2,     KC_3,     KC_4,     KC_5,     KC_6,       KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,    KC_HOME,  KC_PGUP,
+     KC_TAB,      KC_Q,        KC_W,     TD(TD_E), TD(TD_R), TD(TD_T), KC_Y,       KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,            KC_DEL,    KC_END,   KC_PGDN,
+     KC_CAPS,     TD(TD_A),    KC_S,     TD(TD_D), TD(TD_F), KC_G,     KC_H,       KC_J,     KC_K,     TD(TD_L), KC_SCLN,  KC_QUOT,  KC_NUHS,  KC_ENT,
+     KC_LSFT,     KC_NUBS,     TD(TD_Z), TD(TD_X), TD(TD_C), TD(TD_V), TD(TD_B),   TD(TD_N), KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,             KC_UP,
+     KC_LCTL,     KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_MEH,  KC_RGUI, MO(WIN_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [WIN_FN] = LAYOUT_tkl_iso(
      KC_TRNS,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FILE,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,            KC_TRNS,  KC_TRNS,  RGB_TOG,
@@ -314,6 +316,8 @@ tap_dance_action_t tap_dance_actions[] = {
 //    [TD_Z] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_Z,KC_Z,KC_LCTL,0,0),
     // Under development
     [TD_V] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_V,RCS(KC_V),LSFT(KC_INS)),
+    [TD_ESC] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_ESC,0,KC_PSCR),
+    [TD_D] = ACTION_TD_DOUBLE_TAP_AND_HOLD(KC_D,0,LCTL(KC_D)),
 //    [TD_V] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_V,KC_V,KC_LCTL,KC_INS,KC_LSFT),
     [TD_A] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_A,0,0,KC_A,KC_LCTL),
     [TD_B] = ACTION_TAP_DANCE_TAP_AND_HOLD(KC_B,0,0,KC_B,KC_LCTL),
