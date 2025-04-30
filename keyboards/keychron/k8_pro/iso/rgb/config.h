@@ -44,3 +44,8 @@
         { 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38, 0x38 }
 
 #endif
+
+//#define TAPPING_TERM 199
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+//#define QUICK_TAP_TERM 0

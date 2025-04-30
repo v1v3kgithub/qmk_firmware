@@ -1,4 +1,4 @@
-### My Custom Key Map
+### Vivek Custom Key Map
 
 ### Software Required 
 - Getting started guide : https://docs.qmk.fm/newbs_getting_started
@@ -169,6 +169,24 @@ Erase    done.
 Download	[===============          ]  61%        38912 bytes
 
 ```
+### How do I put my Keychron K8 in Bootloader mode 
+To put your Keychron K8 Pro into bootloader mode, you can either press and hold the Esc key while plugging in the keyboard, or remove the spacebar keycap to reveal the reset button, hold it while connecting the keyboard.
+Detailed Steps:
+
+    1. Option 1 (Esc Key):
+        Unplug the K8 Pro.
+        Hold down the Esc key (top left corner).
+        Plug the USB cable back into the keyboard while continuing to hold the Esc key.
+        Release the Esc key after plugging in the keyboard. 
+    2. Option 2 (Reset Button):
+        Unplug the K8 Pro.
+        Remove the spacebar keycap.
+        Identify the small, four-legged reset button on the PCB, typically located to the left of the spacebar switch.
+        Hold down the reset button with a pen, keycap puller, or other suitable tool.
+        Plug the USB cable back into the keyboard while continuing to hold the reset button.
+        Release the reset button after the keyboard is connected. 
+
+
 
 ### Debug logging 
 Set the following in rules.mk
@@ -197,4 +215,7 @@ dprintf("fnished: tap code : %d \n", pair->tap);
 #### Links
 - Details on Tap Dance: https://docs.qmk.fm/features/tap_dance#how-to-use
 - Source Code on various Data Types : process_tap_dance.h
+- Attempting to setup Home Row Mods https://precondition.github.io/home-row-mods#hold-on-other-key-press
+- Factory Resetting your keyboard - https://www.keychron.com/pages/how-to-factory-reset-or-use-the-launcher-web-app-to-flash-firmware-for-your-keyboard
+- 
 
